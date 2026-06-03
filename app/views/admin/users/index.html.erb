@@ -1,0 +1,64 @@
+<div class="max-w-4xl mx-auto w-full space-y-8 animate-fade-in text-left">
+  <!-- Top Navigation & Title -->
+  <div class="space-y-4">
+    <%= link_to admin_dashboard_path, class: "inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-white transition-colors group" do %>
+      <span class="transition-transform group-hover:-translate-x-0.5">←</span>
+      <span class="font-mono uppercase tracking-wider text-[10px]">Back to Admin Dashboard</span>
+    <% end %>
+
+    <div class="space-y-1.5">
+      <p class="text-[10px] tracking-widest text-zinc-550 font-mono uppercase">User Management</p>
+      <h1 class="text-3xl font-light tracking-tight text-white">Identity Access Control</h1>
+      <p class="text-xs text-zinc-550 font-mono">View system users and modify authorization levels instantly.</p>
+    </div>
+  </div>
+
+  <!-- User Table Panel -->
+  <div class="border border-zinc-900 bg-zinc-900/10 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl shadow-black/40">
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead>
+          <tr class="border-b border-zinc-900 bg-zinc-950/40">
+            <th class="px-6 py-4 text-[10px] tracking-widest text-zinc-500 font-mono uppercase font-semibold">ID</th>
+            <th class="px-6 py-4 text-[10px] tracking-widest text-zinc-500 font-mono uppercase font-semibold">Username</th>
+            <th class="px-6 py-4 text-[10px] tracking-widest text-zinc-500 font-mono uppercase font-semibold">Email</th>
+            <th class="px-6 py-4 text-[10px] tracking-widest text-zinc-500 font-mono uppercase font-semibold">Role</th>
+            <th class="px-6 py-4 text-[10px] tracking-widest text-zinc-500 font-mono uppercase font-semibold text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-900/50">
+          <% @users.each do |user| %>
+            <tr class="hover:bg-zinc-900/20 transition-colors duration-150">
+              <td class="px-6 py-4 text-xs font-mono text-zinc-500"><%= user.id %></td>
+              <td class="px-6 py-4 text-xs font-mono text-zinc-200"><%= user.username.presence || "—" %></td>
+              <td class="px-6 py-4 text-xs font-mono text-zinc-350"><%= user.email %></td>
+              <td class="px-6 py-4 text-xs font-mono">
+                <% if user.admin? %>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold tracking-wider uppercase border border-white text-white">
+                    <%= user.role %>
+                  </span>
+                <% else %>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold tracking-wider uppercase border border-zinc-800 text-zinc-500">
+                    <%= user.role %>
+                  </span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 text-xs text-right">
+                <% if user == current_user %>
+                  <span class="text-[10px] font-mono tracking-wider uppercase text-zinc-550 italic">Logged In (You)</span>
+                <% else %>
+                  <%= button_to toggle_role_admin_user_path(user), 
+                                method: :patch, 
+                                data: { turbo_confirm: "Are you sure you want to change the role for #{user.email}?" },
+                                class: "inline-flex cursor-pointer items-center justify-center text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-350 hover:text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 px-3.5 py-1.5 rounded-lg transition-all duration-200 ml-auto" do %>
+                    Make <%= user.user? ? 'Admin' : 'User' %>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

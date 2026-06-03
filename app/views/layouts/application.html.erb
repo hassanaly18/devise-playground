@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html class="h-full bg-zinc-950 text-zinc-100">
+  <head>
+    <title><%= content_for(:title) || "Devise Playground" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Devise Playground">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartkick"></script>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="h-full font-sans antialiased bg-zinc-950 text-zinc-100 flex flex-col selection:bg-zinc-800 selection:text-white">
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 w-full border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <%= link_to root_path, class: "flex items-center gap-2 group" do %>
+            <div class="w-8 h-8 rounded-lg bg-white text-zinc-950 flex items-center justify-center font-bold text-lg tracking-tighter transition-all duration-300 group-hover:scale-105">
+              D
+            </div>
+            <span class="text-xs font-bold tracking-widest text-zinc-200 transition-colors group-hover:text-white uppercase font-mono">
+              Devise_Playground
+            </span>
+          <% end %>
+        </div>
+
+        <nav class="flex items-center gap-6">
+          <% if user_signed_in? %>
+            <%= link_to "Dashboard", root_path, class: "text-xs font-medium tracking-wide uppercase text-zinc-400 hover:text-white transition-colors" %>
+            
+            <% if policy(User).index? %>
+              <%= link_to "Admin Panel", admin_dashboard_path, class: "text-xs font-medium tracking-wide uppercase text-zinc-400 hover:text-white transition-colors" %>
+            <% end %>
+            
+            <%= link_to "Profile", edit_user_registration_path, class: "text-xs font-medium tracking-wide uppercase text-zinc-400 hover:text-white transition-colors" %>
+            
+            <div class="h-4 w-px bg-zinc-800"></div>
+            
+            <div class="flex items-center gap-4">
+              <span class="text-xs text-zinc-500 font-mono hidden md:inline">
+                <%= current_user.username.presence || current_user.email %>
+              </span>
+              <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "text-xs font-medium uppercase tracking-wider text-zinc-300 hover:text-white bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 px-3 py-1.5 rounded-md transition-all duration-200" %>
+            </div>
+          <% else %>
+            <%= link_to "Log In", new_user_session_path, class: "text-xs font-medium tracking-wide uppercase text-zinc-400 hover:text-white transition-colors" %>
+            <%= link_to "Sign Up", new_user_registration_path, class: "text-xs font-medium tracking-wider uppercase text-zinc-950 bg-white hover:bg-zinc-200 px-4 py-1.5 rounded-md transition-all duration-200" %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col justify-center items-center">
+      <!-- Flash Messages -->
+      <div class="w-full max-w-md mx-auto mb-6 space-y-3">
+        <% if notice %>
+          <div class="flex items-center gap-3 px-4 py-3 rounded-lg border border-zinc-850 bg-zinc-900/40 backdrop-blur-sm text-zinc-300 text-xs tracking-wide shadow-xl shadow-black/20 animate-fade-in" role="alert">
+            <span class="w-1.5 h-1.5 rounded-full bg-zinc-400 shrink-0"></span>
+            <p class="flex-grow font-mono"><%= notice %></p>
+          </div>
+        <% end %>
+        <% if alert %>
+          <div class="flex items-center gap-3 px-4 py-3 rounded-lg border border-red-950 bg-red-950/20 backdrop-blur-sm text-red-300 text-xs tracking-wide shadow-xl shadow-black/20 animate-fade-in" role="alert">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0 animate-pulse"></span>
+            <p class="flex-grow font-mono"><%= alert %></p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="w-full max-w-4xl flex flex-col justify-center">
+        <%= yield %>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-zinc-900 py-8 bg-zinc-950 text-center">
+      <p class="text-[10px] tracking-widest text-zinc-650 font-mono uppercase">
+        &copy; <%= Time.current.year %> Devise_Playground &bull; Sleek, secure, and minimalist.
+      </p>
+    </footer>
+  </body>
+</html>

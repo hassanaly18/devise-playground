@@ -1,0 +1,58 @@
+<div class="max-w-2xl mx-auto w-full space-y-8 animate-fade-in text-left">
+  <!-- Heading Section -->
+  <div class="space-y-2 text-center md:text-left">
+    <p class="text-[10px] tracking-widest text-zinc-550 font-mono uppercase">System Administration</p>
+    <h1 class="text-3xl font-light tracking-tight text-white flex items-center gap-2 justify-center md:justify-start">
+      🔒 <span class="font-normal text-zinc-200">Security Control Panel</span>
+    </h1>
+    <p class="text-xs text-zinc-500 font-mono">Welcome to the Devise Playground secure administrative interface.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Stat Card -->
+    <div class="md:col-span-1 border border-zinc-900 bg-zinc-900/10 backdrop-blur-sm rounded-xl p-6 space-y-4">
+      <p class="text-[10px] tracking-widest text-zinc-500 font-mono uppercase">System Users</p>
+      <div class="space-y-1">
+        <h2 class="text-4xl font-light tracking-tight text-white"><%= @users_count %></h2>
+        <p class="text-[10px] tracking-wider text-zinc-450 font-mono uppercase">Registered Accounts</p>
+      </div>
+    </div>
+
+    <!-- Controls Menu Card -->
+    <div class="md:col-span-2 border border-zinc-900 bg-zinc-900/10 backdrop-blur-sm rounded-xl p-6 flex flex-col justify-between">
+      <div>
+        <p class="text-[10px] tracking-widest text-zinc-500 font-mono uppercase mb-4">Application Controls</p>
+        <p class="text-xs text-zinc-400 font-mono leading-relaxed">
+          Manage application identities, update user roles dynamically, and monitor platform permissions instantly.
+        </p>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-zinc-900">
+        <%= link_to admin_users_path, class: "inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-zinc-950 bg-white hover:bg-zinc-200 px-4 py-2.5 rounded-lg transition-all duration-200" do %>
+          Manage Users &amp; Roles <span class="font-mono">&rarr;</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <hr style="border: 0; height: 1px; background: #ccc; margin: 20px 0;">
+
+    <div style="background-color: white; padding: 20px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px;">
+      <h3 style="margin-top: 0;">📈 User Registration Growth (Last 30 Days)</h3>
+    
+      <%= line_chart @user_growth, 
+                   xtitle: "Date", 
+                   ytitle: "New Registrations", 
+                   curve: false, 
+                   points: true,
+                   colors: ["#007bff"] %>
+    </div>
+
+  <!-- Back Link -->
+  <div class="text-center md:text-left">
+    <%= link_to root_path, class: "inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-white transition-colors group" do %>
+      <span class="transition-transform group-hover:-translate-x-0.5">←</span>
+      <span class="font-mono uppercase tracking-wider text-[10px]">Back to Dashboard</span>
+    <% end %>
+  </div>
+</div>
