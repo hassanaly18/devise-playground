@@ -1,0 +1,41 @@
+<div class="max-w-md mx-auto w-full animate-fade-in">
+  <div class="border border-zinc-900 bg-zinc-900/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl shadow-black/40">
+    <!-- Header -->
+    <div class="mb-8 space-y-2 text-center">
+      <p class="text-[10px] tracking-widest text-zinc-500 font-mono uppercase">Security Gateway</p>
+      <h2 class="text-2xl font-light tracking-tight text-white">Log in to Account</h2>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="space-y-5">
+        <!-- Email Field -->
+        <div class="space-y-1.5 text-left">
+          <%= f.label :email, class: "text-[10px] tracking-widest text-zinc-455 font-mono uppercase" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "you@example.com", class: "w-full bg-zinc-950/60 border border-zinc-900 focus:border-zinc-750 focus:ring-1 focus:ring-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-200 placeholder-zinc-700 focus:outline-none transition-all duration-200" %>
+        </div>
+
+        <!-- Password Field -->
+        <div class="space-y-1.5 text-left">
+          <%= f.label :password, class: "text-[10px] tracking-widest text-zinc-455 font-mono uppercase" %>
+          <%= f.password_field :password, autocomplete: "current-password", placeholder: "••••••••", class: "w-full bg-zinc-950/60 border border-zinc-900 focus:border-zinc-750 focus:ring-1 focus:ring-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-200 placeholder-zinc-700 focus:outline-none transition-all duration-200" %>
+        </div>
+
+        <!-- Remember Me Checkbox -->
+        <% if devise_mapping.rememberable? %>
+          <div class="flex items-center gap-2.5 py-1.5 text-left">
+            <%= f.check_box :remember_me, class: "w-4 h-4 rounded border-zinc-900 bg-zinc-950 text-white focus:ring-0 focus:ring-offset-0 cursor-pointer accent-zinc-800" %>
+            <%= f.label :remember_me, class: "text-xs text-zinc-400 font-mono tracking-wide cursor-pointer hover:text-white transition-colors" %>
+          </div>
+        <% end %>
+
+        <!-- Submit Button -->
+        <div class="pt-2">
+          <%= f.submit "Log in", class: "w-full cursor-pointer text-xs font-semibold uppercase tracking-wider text-zinc-950 bg-white hover:bg-zinc-200 py-3.5 rounded-lg transition-all duration-200 shadow-lg shadow-white/5" %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Shared Links -->
+    <%= render "devise/shared/links" %>
+  </div>
+</div>
