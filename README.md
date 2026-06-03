@@ -1,3 +1,12 @@
+---
+title: Devise Playground
+emoji: 🔒
+colorFrom: gray
+colorTo: blue
+sdk: docker
+pinned: false
+---
+
 # Devise Playground
 
 A Ruby on Rails application built for learning and experimenting with authentication and authorization concepts.
