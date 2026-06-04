@@ -6,4 +6,9 @@ const application = Application.start()
 application.debug = false
 window.Stimulus   = application
 
+// Override error handling to capture production bugs
+application.handleError = (error, message, detail) => {
+  console.warn(`[Stimulus Error] ${message}`, detail)
+}
+
 export { application }
