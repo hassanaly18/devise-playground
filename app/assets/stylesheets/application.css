@@ -8,3 +8,13 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+
+ .clipboard-button {
+  display: none;
+}
+
+/* 2. Show the button ONLY when the parent wrapper has the supported class */
+.clipboard--supported .clipboard-button {
+  display: inline-block;
+}
