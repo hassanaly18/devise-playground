@@ -69,7 +69,7 @@ end
 
 gem "pundit", "~> 2.5"
 
-gem "tailwindcss-rails", "~> 4.4"
+gem "tailwindcss-rails", "~> 4.6"
 
 gem "chartkick", "~> 5.2"
 gem "groupdate", "~> 6.8"
